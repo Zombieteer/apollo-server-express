@@ -1,10 +1,16 @@
 
 import express from 'express'
+import mongoose from 'mongoose'
 import { ApolloServer, gql } from 'apollo-server-express'
 import { success, error } from 'consola'
-import { PORT, IN_PROD } from './config'
 import resolvers from './graphql/resolvers'
 import typeDefs from './graphql/typeDefs'
+
+import {
+    PORT,
+    IN_PROD,
+    DB
+} from './config'
 
 // Initialise express applications
 const app = express()
@@ -16,8 +22,20 @@ const server = new ApolloServer({
     context: {}
 })
 
-const startApp = () => {
+const startApp = async () => {
     try {
+        // connect to database
+        await mongoose.connect(DB, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useFindAndModify: false,
+        })
+        success({
+            message: `Successfully connected with the database`,
+            badge: true
+        });
+
+        // inject apollo server middle ware to express app
         server.applyMiddleware({ app })
         app.listen(PORT, () => success({
             message: `Server started in PORT ${PORT}`,
@@ -25,7 +43,7 @@ const startApp = () => {
         }))
     } catch (error) {
         error({
-            message: `Server didn't started`,
+            message: error.message,
             badge: true
         })
     }

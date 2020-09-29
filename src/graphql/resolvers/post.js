@@ -1,5 +1,10 @@
 export default {
     Query:{
-        hello:() => "hello from graphql"
+        getAllPosts: ()=>{
+            return [{
+                title: 'Hello World',
+                content: 'sample content'
+            }]
+        }
     }
 }
