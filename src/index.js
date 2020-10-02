@@ -12,6 +12,8 @@ import {
     DB
 } from './config'
 
+import * as AppModels from './models'
+
 // Initialise express applications
 const app = express()
 
@@ -19,7 +21,7 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     playground: IN_PROD,
-    context: {}
+    context: {...AppModels}
 })
 
 const startApp = async () => {
