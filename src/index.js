@@ -1,8 +1,9 @@
 
 import express from 'express'
 import mongoose from 'mongoose'
-import { ApolloServer, gql } from 'apollo-server-express'
+import { ApolloServer } from 'apollo-server-express'
 import { success, error } from 'consola'
+import { join } from 'path'
 import resolvers from './graphql/resolvers'
 import typeDefs from './graphql/typeDefs'
 
@@ -16,12 +17,13 @@ import * as AppModels from './models'
 
 // Initialise express applications
 const app = express()
+app.use(express.static(join(__dirname, './uploads')))
 
 const server = new ApolloServer({
     typeDefs,
     resolvers,
     playground: IN_PROD,
-    context: {...AppModels}
+    context: { ...AppModels }
 })
 
 const startApp = async () => {

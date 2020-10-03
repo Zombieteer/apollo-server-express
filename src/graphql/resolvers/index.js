@@ -1,2 +1,4 @@
 import post from './post'
-export default [post];
+import image from './image'
+
+export default [post, image];
