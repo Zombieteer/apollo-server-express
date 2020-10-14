@@ -36,7 +36,6 @@ export default {
                 result = result.toObject()
                 result.id = result._id
                 result = serializeUser(result)
-                console.log(result)
 
                 // issue the authentication token
                 let token = await issueToken(result)

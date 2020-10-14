@@ -8,5 +8,5 @@ export const issueToken = async (user) => {
 }
 
 export const serializeUser = (user) => {
-    return pick(user, ['id', 'username', 'email', 'firstName', 'lastName']);
+    return pick(user, ['id', 'username', 'email', 'firstName', 'lastName', 'avatarImage']);
 }
